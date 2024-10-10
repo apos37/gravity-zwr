@@ -4,7 +4,7 @@ Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 5.0.0
 Requires PHP: 8.0
 Tested up to: 6.6.2
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -84,7 +84,7 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 4. Entry note on failed registration
 
 == Changelog ==
-= 1.3.1 =
+= 1.3.2 =
 * Initial release to WP Plugin Repository
 * Update: Added a note for when it is successful as well
 * Update: Updated error note to include only the body code and message instead of the whole array
