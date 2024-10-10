@@ -16,7 +16,7 @@ This plugin adds a "Zoom Registration" feed to your Gravity Forms. Although it w
 
 Updated to work with Server-to-server OAuth.
 
-Originally developed by Michael Bourne as "Gravity Forms Zoom Webinar Registration." This is the same plugin modified for release on the WP Plugin Repository. We had to change the name per guidelines.
+Originally developed by Michael Bourne as "[Gravity Forms Zoom Webinar Registration](https://github.com/michaelbourne/gravity-forms-zoom-webinar-registration)." This is the same plugin modified for release on the WP Plugin Repository. We had to change the name per guidelines.
 
 == Requirements ==
 
@@ -27,6 +27,21 @@ Originally developed by Michael Bourne as "Gravity Forms Zoom Webinar Registrati
 5. A [Server-to-Server OAuth Application](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/) created for your own Zoom account
 6. WordPress version 5+
 7. PHP version 8.0+
+
+== Third-Party Services ==
+
+This plugin integrates with the Zoom API to facilitate registration for webinars and meetings. By using this plugin, you acknowledge that certain data will be transmitted to Zoom in order to create and manage webinar registrants.
+
+**Circumstances Under Which Data is Sent:**
+- When a user submits a registration form, the plugin sends the registrant's information (e.g., name, email) to Zoom to create a new registrant for the specified webinar or meeting.
+
+**Links:**
+- **Zoom API Documentation**: [Zoom API Documentation](https://developers.zoom.us/docs/api/)
+- **Zoom Privacy Policy**: [Zoom Privacy Policy](https://www.zoom.com/en/trust/privacy/)
+- **Zoom Terms of Service**: [Zoom Terms of Service](https://www.zoom.com/en/trust/terms/)
+
+For any concerns regarding data transmission and processing, please refer to the links above to understand how your information is handled by Zoom.
+
 
 == Installation ==
 
@@ -52,6 +67,10 @@ By default, this plugin will ask for your Account ID, Client ID & Secret in the 
 == Payments ==
 
 This add-on supports delayed payment through the Gravity Forms PayPal add-on. Charge for registrations via PayPal, processing the Zoom Registration feed only upon successful payment. [Read more here.](https://docs.gravityforms.com/setting-up-paypal-payments-standard/)
+
+== Migrating from Old Plugin ==
+
+This plugin uses the same text domain as the other one by Michael Bourne, so all of the settings and webinar feeds that you previously set up will remain. All you need to do is install and activate this plugin while the other one is activated. No need to set everything up again. :)
 
 == Support ==
 

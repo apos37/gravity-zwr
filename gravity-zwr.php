@@ -21,6 +21,14 @@ if ( !defined( 'ABSPATH' ) ) {
 
 
 /**
+ * If the old version is active, let's deactivate it
+ */
+if ( is_plugin_active( 'gravity-forms-zoom-webinar-registration-master/gravity-forms-zoom-webinar-registration.php' ) ) {
+    deactivate_plugins( 'gravity-forms-zoom-webinar-registration-master/gravity-forms-zoom-webinar-registration.php' );
+}
+
+
+/**
  * Defines
  */
 defined( 'GRAVITYZWR_NAME' ) || define( 'GRAVITYZWR_NAME', 'Add-On for Zoom Registration and Gravity Forms' );
@@ -64,7 +72,7 @@ class GravityZWR_Bootstrap {
 /**
  * Filter plugin action links
  */
-add_filter( 'plugin_row_meta', 'gfzoom_plugin_row_meta' , 10, 2 );
+add_filter( 'plugin_row_meta', 'gravityzwr_plugin_row_meta' , 10, 2 );
 
 
 /**
@@ -73,7 +81,7 @@ add_filter( 'plugin_row_meta', 'gfzoom_plugin_row_meta' , 10, 2 );
  * @param array $links
  * @return array
  */
-function gfzoom_plugin_row_meta( $links, $file ) {
+function gravityzwr_plugin_row_meta( $links, $file ) {
     // Only apply to this plugin
     if ( GRAVITYZWR_TEXTDOMAIN.'/'.GRAVITYZWR_TEXTDOMAIN.'.php' == $file ) {
 
@@ -82,9 +90,34 @@ function gfzoom_plugin_row_meta( $links, $file ) {
             'docs'    => '<a href="'.esc_url( 'https://apos37.com/wordpress-addon-for-zoom-gravity-forms/' ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Website Link', 'gravity-zwr' ).'">'.esc_html__( 'Website', 'gravity-zwr' ).'</a>',
             'discord' => '<a href="'.esc_url( 'https://discord.gg/3HnzNEJVnR' ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Support on Discord', 'gravity-zwr' ).'">'.esc_html__( 'Discord Support', 'gravity-zwr' ).'</a>'
         ];
+
+        // Require Gravity Forms Notice
+        if ( ! is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+            echo '<div class="gravity-forms-required-notice" style="margin: 5px 0 15px; border-left-color: #d63638 !important; background: #FCF9E8; border: 1px solid #c3c4c7; border-left-width: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, .04); padding: 10px 12px;">';
+            /* translators: 1: Plugin name, 2: Gravity Forms link */
+            printf( esc_html__( 'This plugin requires the %s plugin to be activated!', 'gravity-zwr' ),
+                '<strong><a href="https://www.gravityforms.com/" target="_blank">Gravity Forms</a>'
+            );
+            echo '</div>';
+        }
+        
+        // Merge the links
         return array_merge( $links, $row_meta );
+    }
+
+    // Only apply to this plugin
+    if ( 'gravity-forms-zoom-webinar-registration-master/gravity-forms-zoom-webinar-registration.php' == $file ) {
+
+        // Disabled notice
+        echo '<div class="gravity-forms-required-notice" style="margin: 5px 0 15px; border-left-color: #d63638 !important; background: #FCF9E8; border: 1px solid #c3c4c7; border-left-width: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, .04); padding: 10px 12px;">';
+        /* translators: %s - Link to Old Plugin */
+        printf( esc_html__( 'This plugin has been deactivated and replaced with the %1$s plugin. All of your settings and webinar feeds should transfer over to the new plugin, but it\'s good to double-check your settings and make sure it carried over correctly before deleting %2$s. If you need to activate this plugin again, you must deactivate the other one first.', 'gravity-zwr' ),
+            '<strong>' . esc_html( GRAVITYZWR_NAME ) . '</strong>',
+            '<a href="https://github.com/michaelbourne/gravity-forms-zoom-webinar-registration" target="_blank">' . esc_html__( 'this one', 'gravity-zwr' ) . '</a>'
+        );
+        echo '</div>';
     }
 
     // Return the links
     return (array) $links;
-} // End gfzoom_plugin_row_meta()
+} // End gravityzwr_plugin_row_meta()

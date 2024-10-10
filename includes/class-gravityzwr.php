@@ -509,7 +509,7 @@ class GravityZWR extends GFFeedAddOn {
 			if ( isset( $response_data['code'] ) && isset( $response_data['message'] ) ) {
 				$error_message = __( 'Code', 'gravity-zwr' ) . ' - ' . $response_data['code'] . ', ' . __( 'Message', 'gravity-zwr' ) . ' - ' . $response_data['message'];
 			} else {
-				$error_message = print_r( $remote_request->get_response(), true );
+				$error_message = print_r( $remote_request->get_response(), true ); // phpcs:ignore
 			}
 		
 			// Log that registration failed.

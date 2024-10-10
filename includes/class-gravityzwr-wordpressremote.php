@@ -6,12 +6,12 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	return;
+	exit;
 }
 
- /**
-  * GravityZWR_WordPressRemote Class
-  */
+/**
+ * GravityZWR_WordPressRemote Class
+ */
 class GravityZWR_WordPressRemote {
 
 
