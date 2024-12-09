@@ -257,6 +257,22 @@ class GravityZWR extends GFFeedAddOn {
 						'feedback_callback' => array( $this, 'is_valid_setting' ),
 					),
 					[
+						'label'   => esc_html__( 'Default Meeting Type', 'gravity-zwr' ),
+						'type'    => 'select',
+						'name'    => 'zoomdefaultmeetingtype',
+						'tooltip' => esc_html__( 'While created for webinars, this plugin will also work for normal meetings. You may change which one you would like to be selected by default. You can also change it on the individual feeds.', 'gravity-zwr' ),
+						'choices' => [
+							[
+								'label' => esc_html__( 'Webinar', 'gravity-zwr' ),
+								'value' => 'webinars',
+							],
+							[
+								'label' => esc_html__( 'Meeting', 'gravity-zwr' ),
+								'value' => 'meetings',
+							],
+						],
+					],
+					[
                         'type' => 'html',
                         'name' => 'zoomformjson',
                         'args' => [
@@ -266,7 +282,7 @@ class GravityZWR extends GFFeedAddOn {
 								'<code><a href="'.esc_url( GRAVITYZWR_URI ).'gravity-forms-zoom-registration-sample-form.json">gravity-forms-zoom-registration-sample-form.json</a></code>' 
 								), [ 'code' => [], 'a' => [ 'href' => [] ] ] )
                         ],
-                    ],
+                    ]
 				),
 			),
 		);
@@ -278,16 +294,24 @@ class GravityZWR extends GFFeedAddOn {
 	 * @return array
 	 */
 	public function feed_settings_fields() {
+		$plugin_settings = $this->get_plugin_settings();
+		if ( $plugin_settings && isset( $plugin_settings[ 'zoomdefaultmeetingtype' ] ) ) {
+			$default_meeting_type = sanitize_key( $plugin_settings[ 'zoomdefaultmeetingtype' ] );
+		} else {
+			$default_meeting_type = 'webinars';
+		}
+		
 		return array(
 			array(
 				'title'  => esc_html__( 'Zoom Webinar Settings', 'gravity-zwr' ),
 				'fields' => array(
 					array(
-						'label'   => esc_html__( 'Meeting Type', 'gravity-zwr' ),
-						'type'    => 'select',
-						'name'    => 'meetingtype',
-						'tooltip' => esc_html__( 'While created for Webinars, this feed will also work for normal meetings', 'gravity-zwr' ),
-						'choices' => array(
+						'label'         => esc_html__( 'Meeting Type', 'gravity-zwr' ),
+						'type'          => 'select',
+						'name'          => 'meetingtype',
+						'tooltip'       => esc_html__( 'While created for webinars, this feed will also work for normal meetings', 'gravity-zwr' ),
+						'default_value' => $default_meeting_type,
+						'choices'       => array(
 							array(
 								'label' => esc_html__( 'Webinar', 'gravity-zwr' ),
 								'value' => 'webinars',

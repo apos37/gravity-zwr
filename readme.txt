@@ -3,8 +3,8 @@ Contributors: apos37, michaelbourne
 Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 5.0.0
 Requires PHP: 8.0
-Tested up to: 6.6.2
-Stable tag: 1.3.3.1
+Tested up to: 6.7.1
+Stable tag: 1.3.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -84,6 +84,9 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.3.4 =
+* Update: Added default meeting type field to plugin settings (props @sflwa for suggestion)
+
 = 1.3.3.1 =
 * Fix: Address country not working on webinars (props peter_04347)
 
