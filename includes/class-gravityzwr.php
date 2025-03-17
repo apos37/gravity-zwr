@@ -530,13 +530,17 @@ class GravityZWR extends GFFeedAddOn {
 			$response_body = $remote_request->get_body();
 
 			// Decode the JSON response to access code and message.
-			$response_data = json_decode( $response_body, true );
+			if ( $response_body ) {
+				$response_data = json_decode( $response_body, true );
 		
-			// Extract the error code and message.
-			if ( isset( $response_data['code'] ) && isset( $response_data['message'] ) ) {
-				$error_message = __( 'Code', 'gravity-zwr' ) . ' - ' . $response_data['code'] . ', ' . __( 'Message', 'gravity-zwr' ) . ' - ' . $response_data['message'];
+				// Extract the error code and message.
+				if ( isset( $response_data['code'] ) && isset( $response_data['message'] ) ) {
+					$error_message = __( 'Code', 'gravity-zwr' ) . ' - ' . $response_data['code'] . ', ' . __( 'Message', 'gravity-zwr' ) . ' - ' . $response_data['message'];
+				} else {
+					$error_message = print_r( $remote_request->get_response(), true ); // phpcs:ignore
+				}
 			} else {
-				$error_message = print_r( $remote_request->get_response(), true ); // phpcs:ignore
+				$error_message = __( 'No response body. Please make sure your Zoom App has been set up correctly.', 'gravity-zwr' );
 			}
 		
 			// Log that registration failed.

@@ -53,7 +53,7 @@ For any concerns regarding data transmission and processing, please refer to the
 == Usage ==
 
 1. After installation, go to **Gravity Forms > Settings > Zoom Webinar**. Enter your [Server OAuth App](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/) Account ID, Client ID, and Client Secret. These apps are free to create, take only 5 minutes, and don't need to be published. Fill in all three fields and hit Save.
-2. Follow the directions on the Zoom API docs carefully. You’ll need to edit roles in Zoom settings and create the app. Your user role and app must have the `meeting:write:admin` and `webinar:write:admin` scopes.
+2. Follow the directions on the Zoom API docs carefully. You’ll need to edit roles in Zoom settings and create the app. Your user role and app must have the `meeting:write:admin` and `webinar:write:admin` scopes. If you are having issues, you may need to add the following scopes: `meeting:write:registrant:admin` and `meeting:read:list_meetings:admin`.
 3. Ensure the Server-to-Server OAuth App in Zoom is *active* before using this addon.
 4. For the form you'd like to use for registrations, go to **Settings > Zoom Webinar**. Add a new feed, give it a name, choose the meeting type, enter your Meeting ID, and match registration fields accordingly. First name, last name, and email are required fields.
 5. Enable registrations on your meeting if using that instead of webinars.
@@ -85,13 +85,14 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 
 == Changelog ==
 = 1.3.4.1 =
-* Fix: Fatal error on get_body() (props nathwl)
+* Update: Add additional scopes to readme
+* Fix: Fatal error on get_body(); update error when there is no response body (reported by nathwl)
 
 = 1.3.4 =
 * Update: Added default meeting type field to plugin settings (props @sflwa for suggestion)
 
 = 1.3.3.1 =
-* Fix: Address country not working on webinars (props peter_04347)
+* Fix: Address country not working on webinars (reported by peter_04347)
 
 = 1.3.2 =
 * Initial release to WP Plugin Repository
