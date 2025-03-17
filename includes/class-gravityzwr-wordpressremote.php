@@ -104,7 +104,7 @@ class GravityZWR_WordPressRemote {
 	 * @return string
 	 */
 	public function get_body(): string {
-		return $this->body;
+		return !is_null( $this->body ) ? $this->body : '';
 	}
 
 	/**

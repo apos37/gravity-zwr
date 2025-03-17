@@ -3,9 +3,9 @@
  * Plugin Name:         Add-On for Zoom Registration and Gravity Forms
  * Plugin URI:          https://apos37.com/wordpress-addon-for-zoom-gravity-forms/
  * Description:         Register attendees in your Zoom Webinar or Zoom Meeting through a Gravity Form
- * Version:             1.3.4
+ * Version:             1.3.4.1
  * Requires at least:   5.9.0
- * Tested up to:        6.7.1
+ * Tested up to:        6.7.2
  * Requires PHP:        8.0
  * Author:              Apos37
  * Author URI:          https://apos37.com/
@@ -33,7 +33,7 @@ if ( is_plugin_active( 'gravity-forms-zoom-webinar-registration-master/gravity-f
  */
 defined( 'GRAVITYZWR_NAME' ) || define( 'GRAVITYZWR_NAME', 'Add-On for Zoom Registration and Gravity Forms' );
 defined( 'GRAVITYZWR_TEXTDOMAIN' ) || define( 'GRAVITYZWR_TEXTDOMAIN', 'gravity-zwr' );
-defined( 'GRAVITYZWR_VERSION' ) || define( 'GRAVITYZWR_VERSION', '1.3.4' );
+defined( 'GRAVITYZWR_VERSION' ) || define( 'GRAVITYZWR_VERSION', '1.3.4.1' );
 defined( 'GRAVITYZWR_ROOT' ) || define( 'GRAVITYZWR_ROOT', plugin_dir_path( __FILE__ ) );
 defined( 'GRAVITYZWR_URI' ) || define( 'GRAVITYZWR_URI', plugin_dir_url( __FILE__ ) );
 defined( 'GRAVITYZWR_ZOOMAPIURL' ) || define( 'GRAVITYZWR_ZOOMAPIURL', 'https://api.zoom.us/v2' );
