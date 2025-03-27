@@ -1,10 +1,10 @@
 === Add-On for Zoom Registration and Gravity Forms ===
 Contributors: apos37, michaelbourne
 Tags: gravity forms, zoom, webinar, meeting, registration
-Requires at least: 5.0.0
+Requires at least: 5.0
 Requires PHP: 8.0
-Tested up to: 6.7.2
-Stable tag: 1.3.4.1
+Tested up to: 6.7
+Stable tag: 1.3.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -84,6 +84,9 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.3.5 =
+* Tweak: Optimization
+
 = 1.3.4.1 =
 * Update: Add additional scopes to readme
 * Fix: Fatal error on get_body(); update error when there is no response body (reported by nathwl)

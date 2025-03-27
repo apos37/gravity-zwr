@@ -1,23 +1,26 @@
 <?php
 /**
  * Plugin Name:         Add-On for Zoom Registration and Gravity Forms
- * Plugin URI:          https://apos37.com/wordpress-addon-for-zoom-gravity-forms/
+ * Plugin URI:          https://github.com/apos37/gravity-zwr
  * Description:         Register attendees in your Zoom Webinar or Zoom Meeting through a Gravity Form
- * Version:             1.3.4.1
- * Requires at least:   5.9.0
- * Tested up to:        6.7.2
+ * Version:             1.3.5
+ * Requires at least:   5.9
+ * Tested up to:        6.7
  * Requires PHP:        8.0
- * Author:              Apos37
- * Author URI:          https://apos37.com/
+ * Author:              WordPress Enhanced
+ * Author URI:          https://wordpressenhanced.com/
+ * Support URI:         https://discord.gg/3HnzNEJVnR
  * Text Domain:         gravity-zwr
  * License:             GPLv3 or later
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.txt
+ * Created on:          October 9, 2024
  */
 
-// Exit if accessed directly.
-if ( !defined( 'ABSPATH' ) ) {
-	exit;
-}
+
+/**
+ * Exit if accessed directly.
+ */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 
 /**
@@ -31,12 +34,20 @@ if ( is_plugin_active( 'gravity-forms-zoom-webinar-registration-master/gravity-f
 /**
  * Defines
  */
-defined( 'GRAVITYZWR_NAME' ) || define( 'GRAVITYZWR_NAME', 'Add-On for Zoom Registration and Gravity Forms' );
-defined( 'GRAVITYZWR_TEXTDOMAIN' ) || define( 'GRAVITYZWR_TEXTDOMAIN', 'gravity-zwr' );
-defined( 'GRAVITYZWR_VERSION' ) || define( 'GRAVITYZWR_VERSION', '1.3.4.1' );
+$plugin_data = get_file_data( __FILE__, [
+    'name'         => 'Plugin Name',
+    'version'      => 'Version',
+    'textdomain'   => 'Text Domain',
+    'support_uri'  => 'Support URI',
+] );
+
+defined( 'GRAVITYZWR_NAME' ) || define( 'GRAVITYZWR_NAME', $plugin_data[ 'name' ] );
+defined( 'GRAVITYZWR_TEXTDOMAIN' ) || define( 'GRAVITYZWR_TEXTDOMAIN', $plugin_data[ 'textdomain' ] );
+defined( 'GRAVITYZWR_VERSION' ) || define( 'GRAVITYZWR_VERSION', $plugin_data[ 'version' ] );
 defined( 'GRAVITYZWR_ROOT' ) || define( 'GRAVITYZWR_ROOT', plugin_dir_path( __FILE__ ) );
 defined( 'GRAVITYZWR_URI' ) || define( 'GRAVITYZWR_URI', plugin_dir_url( __FILE__ ) );
 defined( 'GRAVITYZWR_ZOOMAPIURL' ) || define( 'GRAVITYZWR_ZOOMAPIURL', 'https://api.zoom.us/v2' );
+defined( 'GRAVITYZWR_DISCORD_SUPPORT_URL' ) || define( 'GRAVITYZWR_DISCORD_SUPPORT_URL', $plugin_data[ 'support_uri' ] );
 
 
 /**
@@ -87,8 +98,8 @@ function gravityzwr_plugin_row_meta( $links, $file ) {
 
         // Add the link
         $row_meta = [
-            'docs'    => '<a href="'.esc_url( 'https://apos37.com/wordpress-addon-for-zoom-gravity-forms/' ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Website Link', 'gravity-zwr' ).'">'.esc_html__( 'Website', 'gravity-zwr' ).'</a>',
-            'discord' => '<a href="'.esc_url( 'https://discord.gg/3HnzNEJVnR' ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Support on Discord', 'gravity-zwr' ).'">'.esc_html__( 'Discord Support', 'gravity-zwr' ).'</a>'
+            // 'docs'    => '<a href="'.esc_url( 'https://apos37.com/wordpress-addon-for-zoom-gravity-forms/' ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Website Link', 'gravity-zwr' ).'">'.esc_html__( 'Website', 'gravity-zwr' ).'</a>',
+            'discord' => '<a href="'.esc_url( GRAVITYZWR_DISCORD_SUPPORT_URL ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Support on Discord', 'gravity-zwr' ).'">'.esc_html__( 'Discord Support', 'gravity-zwr' ).'</a>'
         ];
 
         // Require Gravity Forms Notice
