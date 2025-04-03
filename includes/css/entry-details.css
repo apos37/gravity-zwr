@@ -1,0 +1,7 @@
+.gf_entry_wrap .entry-details-table .entry-view-field-value {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    display: block;
+}

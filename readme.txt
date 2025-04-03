@@ -4,7 +4,7 @@ Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 5.0
 Requires PHP: 8.0
 Tested up to: 6.7
-Stable tag: 1.3.5
+Stable tag: 1.4.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -68,6 +68,29 @@ By default, this plugin will ask for your Account ID, Client ID & Secret in the 
 
 This add-on supports delayed payment through the Gravity Forms PayPal add-on. Charge for registrations via PayPal, processing the Zoom Registration feed only upon successful payment. [Read more here.](https://docs.gravityforms.com/setting-up-paypal-payments-standard/)
 
+== Retrieving Join Link URL ==
+
+Starting from version 1.4, a Join Link field has been added to the Zoom Webinar feed registation fields section. If you want the join link to populate into a hidden field on the entry, then just choose the field you want from your form.
+
+== Mapping Custom Questions ==  
+
+Starting from version 1.4, you can map custom questions to your Zoom registration by using a simple code snippet in your website’s theme. This allows you to include additional fields beyond the default ones.
+
+To do this, you’ll need to add a small piece of code to your theme’s `functions.php` file. In the example below, we’re adding a custom question called “Referral Source.” The **name** in the code must exactly match the field name used in your Zoom registration.
+
+Here’s the code you need to add:
+
+`add_filter( 'gravityzwr_registration_fields', function( $fields ) {  
+    $fields[ 'referral_source' ] = [  
+        'type'     => 'string',  
+        'name'     => 'Referral Source',  
+        'required' => false,  
+    ];  
+    return $fields;  
+} );`
+
+Once this is added, the “Referral Source” field will be included in your Gravity Forms Zoom Webinar feed settings.
+
 == Migrating from Old Plugin ==
 
 This plugin uses the same text domain as the other one by Michael Bourne, so all of the settings and webinar feeds that you previously set up will remain. All you need to do is install and activate this plugin while the other one is activated. No need to set everything up again. :)
@@ -84,7 +107,12 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.4.0 =
+* Update: Added support for join link to be populated into an entry field (feature request by venzee)
+* Update: Added support for custom questions with `gravityzwr_registration_fields` hook (feature request by lsterling03)
+
 = 1.3.5 =
+* Update: Changed author name from Apos37 to WordPress Enhanced, new Author URI
 * Tweak: Optimization
 
 = 1.3.4.1 =

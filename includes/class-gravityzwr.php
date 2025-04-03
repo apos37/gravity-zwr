@@ -148,6 +148,22 @@ class GravityZWR extends GFFeedAddOn {
 	}
 
 	/**
+	 * Return the stylesheets which should be enqueued.
+	 *
+	 * @return array
+	 */
+	public function styles() {
+		return array_merge( parent::styles(), [
+			[
+				'handle'  => 'gravityzwr_join_url_support',
+				'src'     => GRAVITYZWR_PLUGIN_DIR . 'includes/css/entry-details.css',
+				'version' => time(), // TODO: $this->_version
+				'enqueue' => [ [ 'query' => 'page=gf_entries' ] ],
+			]
+		]);
+	} // End styles()
+
+	/**
 	 * Form settings icon
 	 *
 	 * @return string
@@ -436,9 +452,8 @@ class GravityZWR extends GFFeedAddOn {
 					'label'      => $config['name'],
 					'required'   => $config['required'],
 					'field_type' => $field_type,
-					'tooltip'	 => $config['description'],
+					// 'tooltip'	 => $config['description'],
 				);
-
 			}
 		}
 
@@ -481,12 +496,23 @@ class GravityZWR extends GFFeedAddOn {
 		// Retrieve the name => value pairs for all fields mapped in the 'mappedFields' field map.
 		$field_map = $this->get_field_map_fields( $feed, 'mappedFields' );
 
+		// Retrieve the labels if any custom fields have been added
+		$merge_fields = $this->get_list_merge_fields();
+
 		// Loop through the fields from the field map setting building an array of values to be passed to the third-party service.
 		$merge_vars = array();
+		$custom_questions = array();
+		$join_url_field_id = 0;
 		foreach ( $field_map as $name => $field_id ) {
 
 			// If no field is mapped, skip it.
 			if ( rgblank( $field_id ) ) {
+				continue;
+			}
+
+			// Let's skip the join link for now
+			if ( $name == 'join_url' ) {
+				$join_url_field_id = $field_id;
 				continue;
 			}
 
@@ -504,7 +530,19 @@ class GravityZWR extends GFFeedAddOn {
 			}
 
 			// Get the field value for the specified field id
-			$merge_vars[ $name ] = $field_value;
+			if ( in_array( $name, $this->get_merge_field_default_keys() ) ) {
+				$merge_vars[ $name ] = $field_value;
+			} else {
+				$custom_questions[] = [
+					'title' => $merge_fields[ $name ][ 'name' ],
+					'value' => $field_value
+				];
+			}
+		}
+
+		// Only add custom_questions if there are any
+		if ( ! empty( $custom_questions ) ) {
+			$merge_vars[ 'custom_questions' ] = $custom_questions;
 		}
 
 		if ( empty( $merge_vars ) ) {
@@ -554,8 +592,21 @@ class GravityZWR extends GFFeedAddOn {
 
 		} else {
 
-			/* translators: %s - either "webinar" or "meeting" depending on the type; %s - Meeting ID */
-            $note = sprintf( __( 'Zoom registration was successful. %1$s ID: %2$s', 'gravity-zwr' ), ucwords( rtrim( $meetingtype, 's' ) ), $meeting_id );
+			// Decode the response body to extract join_url
+			$response_data = json_decode( $remote_request->get_body(), true );
+			$join_url = isset( $response_data['join_url'] ) ? $response_data['join_url'] : '';
+		
+			/* translators: %s - either "webinar" or "meeting" depending on the type; %s - Meeting ID; %s - Join URL */
+			$note = sprintf(
+				__( 'Zoom registration was successful. %1$s ID: %2$s.', 'gravity-zwr' ),
+				ucwords( rtrim( $meetingtype, 's' ) ),
+				$feed['meta']['zoomWebinarID']
+			);
+
+			// Update the entry with the join url
+			if ( $join_url_field_id ) {
+				GFAPI::update_entry_field( $entry[ 'id' ], $join_url_field_id, $join_url );
+			}
           
             // Log that the registrant was added.
             RGFormsModel::add_note( $entry[ 'id' ], 0, __( 'Zoom Webinar', 'gravity-zwr' ), esc_html( $note ), 'gravity-zwr', 'success' );
@@ -603,6 +654,32 @@ class GravityZWR extends GFFeedAddOn {
 		}
 		return $plugin_settings;
 	}
+
+	/**
+	 * Get the default field keys
+	 *
+	 * @return array
+	 */
+	public function get_merge_field_default_keys() {
+		return array(
+			'first_name',
+			'last_name',
+			'email',
+			'address',
+			'city',
+			'country',
+			'zip',
+			'state',
+			'phone',
+			'industry',
+			'org',
+			'job_title',
+			'purchasing_time_frame',
+			'role_in_purchase_process',
+			'no_of_employees',
+			'comments',
+		);
+	} // End get_merge_field_default_keys()
 
 	/**
 	 * Get Zoom Webinar registration merge fields for list.
@@ -708,10 +785,17 @@ class GravityZWR extends GFFeedAddOn {
 					'description' => 'A field that allows registrants to provide any questions or comments that they might have.',
 					'required'	  => false,
 				),
+			'join_url' 				   => array(
+					'type' 		  => 'hidden',
+					'name'		  => 'Join Link (Auto-Populates)',
+					'description' => 'If you would like to update a hidden field with the Join Link, you can choose the field here.',
+					'required'	  => false,
+				),
 		);
 
+		// Allow custom fields
+		$fields = apply_filters( 'gravityzwr_registration_fields', $fields );
 		return $fields;
-
 	}
 
 
