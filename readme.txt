@@ -11,7 +11,6 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 Register attendees in your Zoom Webinar or Zoom Meeting through a Gravity Form.
 
 == Description ==
-
 This plugin adds a "Zoom Registration" feed to your Gravity Forms. Although it was created specifically for the Webinars feature on Zoom, it will also work with regular Meetings.
 
 Updated to work with Server-to-server OAuth.
@@ -19,7 +18,6 @@ Updated to work with Server-to-server OAuth.
 Originally developed by Michael Bourne as "[Gravity Forms Zoom Webinar Registration](https://github.com/michaelbourne/gravity-forms-zoom-webinar-registration)." This is the same plugin modified for release on the WP Plugin Repository. We had to change the name per guidelines.
 
 == Requirements ==
-
 1. A WordPress.org based website
 2. The [Gravity Forms](https://www.gravityforms.com/) plugin
 3. A [Zoom](https://zoom.us/) account, Pro plan or higher
@@ -29,7 +27,6 @@ Originally developed by Michael Bourne as "[Gravity Forms Zoom Webinar Registrat
 7. PHP version 8.0+
 
 == Third-Party Services ==
-
 This plugin integrates with the Zoom API to facilitate registration for webinars and meetings. By using this plugin, you acknowledge that certain data will be transmitted to Zoom in order to create and manage webinar registrants.
 
 **Circumstances Under Which Data is Sent:**
@@ -42,16 +39,13 @@ This plugin integrates with the Zoom API to facilitate registration for webinars
 
 For any concerns regarding data transmission and processing, please refer to the links above to understand how your information is handled by Zoom.
 
-
 == Installation ==
-
 1. Install the plugin from your website's plugin directory, or upload the plugin to your plugins folder. 
 2. Activate it.
 3. Go to **Gravity Forms > Settings > Zoom Webinar**.
 3. Optional: save and import the `gravity-forms-zoom-registration-sample-form.json` file as a starter form. All required and optional registration fields are included.
 
 == Usage ==
-
 1. After installation, go to **Gravity Forms > Settings > Zoom Webinar**. Enter your [Server OAuth App](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/) Account ID, Client ID, and Client Secret. These apps are free to create, take only 5 minutes, and don't need to be published. Fill in all three fields and hit Save.
 2. Follow the directions on the Zoom API docs carefully. You’ll need to edit roles in Zoom settings and create the app. Your user role and app must have the `meeting:write:admin` and `webinar:write:admin` scopes. If you are having issues, you may need to add the following scopes: `meeting:write:registrant:admin` and `meeting:read:list_meetings:admin`.
 3. Ensure the Server-to-Server OAuth App in Zoom is *active* before using this addon.
@@ -61,24 +55,31 @@ For any concerns regarding data transmission and processing, please refer to the
 *We strongly encourage enabling logging in Gravity Forms settings when testing this add-on.*
 
 == Constants ==
-
 By default, this plugin will ask for your Account ID, Client ID & Secret in the Gravity Forms settings. Users wanting more control can specify these as constants: `GRAVITYZWR_ACCOUNT_ID`, `GRAVITYZWR_CLIENT_ID`, and `GRAVITYZWR_CLIENT_SECRET`.
 
 == Payments ==
-
 This add-on supports delayed payment through the Gravity Forms PayPal add-on. Charge for registrations via PayPal, processing the Zoom Registration feed only upon successful payment. [Read more here.](https://docs.gravityforms.com/setting-up-paypal-payments-standard/)
 
-== Retrieving Join Link URL ==
+== Migrating from Old Plugin ==
+This plugin uses the same text domain as the other one by Michael Bourne, so all of the settings and webinar feeds that you previously set up will remain. All you need to do is install and activate this plugin while the other one is activated. No need to set everything up again. :)
 
-Starting from version 1.4, a Join Link field has been added to the Zoom Webinar feed registation fields section. If you want the join link to populate into a hidden field on the entry, then just choose the field you want from your form.
+== Frequently Asked Questions ==
+= The registration did not go through, what happened? =
+There could be several reasons. You can check for an error in the entry details notes, which should give you a good indication of what happened. Some common reasons include:
+- You didn't actually set up the plugin or a webinar/meeting feed
+- The Account ID, Client ID, and/or Client Secret are incorrect
+- Incorrect scopes set
+- A field is required on your Zoom registration form but not mapped on the plugin feed
+- The webinar or meeting with the ID you entered does not exist
+- The feed is set to a webinar when it should be a meeting or vice versa
+- The webinar/meeting host can not register
+- User's email cannot register for the same webinar/meeting more than 3 times in 24 hours
 
-== Mapping Custom Questions ==  
+= How do I retrieve the join link URL after registration? =
+A Join Link field has been added to the Zoom Webinar feed registation fields section. If you want the join link to populate into a hidden field on the entry, then just choose the field you want from your form.
 
-Starting from version 1.4, you can map custom questions to your Zoom registration by using a simple code snippet in your website’s theme. This allows you to include additional fields beyond the default ones.
-
-To do this, you’ll need to add a small piece of code to your theme’s `functions.php` file. In the example below, we’re adding a custom question called “Referral Source.” The **name** in the code must exactly match the field name used in your Zoom registration.
-
-Here’s the code you need to add:
+= How do I map custom questions? =
+You can map custom questions to your Zoom registration by using a simple code snippet in your website’s theme. This allows you to include additional fields beyond the default ones. To do this, you’ll need to add a small piece of code to your theme’s `functions.php` file. In the example below, we’re adding a custom question called “Referral Source.” The **name** in the code must exactly match the field name used in your Zoom registration. Once this is added, the “Referral Source” field will be included in your Gravity Forms Zoom Webinar feed settings. Here’s the code you need to add:
 
 `add_filter( 'gravityzwr_registration_fields', function( $fields ) {  
     $fields[ 'referral_source' ] = [  
@@ -88,14 +89,6 @@ Here’s the code you need to add:
     ];  
     return $fields;  
 } );`
-
-Once this is added, the “Referral Source” field will be included in your Gravity Forms Zoom Webinar feed settings.
-
-== Migrating from Old Plugin ==
-
-This plugin uses the same text domain as the other one by Michael Bourne, so all of the settings and webinar feeds that you previously set up will remain. All you need to do is install and activate this plugin while the other one is activated. No need to set everything up again. :)
-
-== Support ==
 
 = Where can I request features and get further support? =
 Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
