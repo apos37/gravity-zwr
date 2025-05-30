@@ -3,8 +3,8 @@ Contributors: apos37, michaelbourne
 Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 5.0
 Requires PHP: 8.0
-Tested up to: 6.7
-Stable tag: 1.4.0
+Tested up to: 6.8
+Stable tag: 1.4.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -64,6 +64,15 @@ This add-on supports delayed payment through the Gravity Forms PayPal add-on. Ch
 This plugin uses the same text domain as the other one by Michael Bourne, so all of the settings and webinar feeds that you previously set up will remain. All you need to do is install and activate this plugin while the other one is activated. No need to set everything up again. :)
 
 == Frequently Asked Questions ==
+= Does this work with Events or Sessions? =
+At this time, compatibility with Zoom Events or Zoom Sessions has not been confirmed. As this is a free plugin with no revenue model, investing in an additional Zoom plan solely for testing isn’t feasible at the moment.
+
+= Can I use one form for multiple Zoom webinars? =
+Yes, you can use a single Gravity Form to handle registrations for multiple Zoom webinars by creating a separate feed for each webinar. Each feed can be triggered conditionally based on a form field value. There are two common ways to manage this:
+- **Dropdown Field**: Add a visible dropdown field to the form listing available webinars. Each feed is configured to run only when a specific option is selected.
+- **Hidden Field**: Use a hidden field (e.g., webinar_id) that is dynamically populated—such as via a URL parameter or post meta—based on the page the form is displayed on. Each feed uses this value to determine which webinar to register for.
+This allows you to reuse the same form without needing to create a new one for each webinar.
+
 = The registration did not go through, what happened? =
 There could be several reasons. You can check for an error in the entry details notes, which should give you a good indication of what happened. Some common reasons include:
 - You didn't actually set up the plugin or a webinar/meeting feed
@@ -100,6 +109,9 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.4.1 =
+* Update: Updated author name and website again per WordPress trademark policy
+
 = 1.4.0 =
 * Update: Added support for join link to be populated into an entry field (feature request by venzee)
 * Update: Added support for custom questions with `gravityzwr_registration_fields` hook (feature request by lsterling03)
