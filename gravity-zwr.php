@@ -3,13 +3,13 @@
  * Plugin Name:         Add-On for Zoom Registration and Gravity Forms
  * Plugin URI:          https://github.com/apos37/gravity-zwr
  * Description:         Register attendees in your Zoom Webinar or Zoom Meeting through a Gravity Form
- * Version:             1.4.1
+ * Version:             1.5.0
  * Requires at least:   5.9
  * Tested up to:        6.8
  * Requires PHP:        8.0
  * Author:              PluginRx
  * Author URI:          https://pluginrx.com/
- * Support URI:         https://discord.gg/3HnzNEJVnR
+ * Discord URI:         https://discord.gg/3HnzNEJVnR
  * Text Domain:         gravity-zwr
  * License:             GPLv3 or later
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.txt
@@ -38,7 +38,8 @@ $plugin_data = get_file_data( __FILE__, [
     'name'         => 'Plugin Name',
     'version'      => 'Version',
     'textdomain'   => 'Text Domain',
-    'support_uri'  => 'Support URI',
+    'author_uri'   => 'Author URI',
+    'discord_uri'  => 'Discord URI'
 ] );
 
 defined( 'GRAVITYZWR_NAME' ) || define( 'GRAVITYZWR_NAME', $plugin_data[ 'name' ] );
@@ -48,7 +49,11 @@ defined( 'GRAVITYZWR_ROOT' ) || define( 'GRAVITYZWR_ROOT', plugin_dir_path( __FI
 defined( 'GRAVITYZWR_PLUGIN_DIR' ) || define( 'GRAVITYZWR_PLUGIN_DIR', plugin_dir_url( __FILE__ ) );
 defined( 'GRAVITYZWR_URI' ) || define( 'GRAVITYZWR_URI', plugin_dir_url( __FILE__ ) );
 defined( 'GRAVITYZWR_ZOOMAPIURL' ) || define( 'GRAVITYZWR_ZOOMAPIURL', 'https://api.zoom.us/v2' );
-defined( 'GRAVITYZWR_DISCORD_SUPPORT_URL' ) || define( 'GRAVITYZWR_DISCORD_SUPPORT_URL', $plugin_data[ 'support_uri' ] );
+defined( 'GRAVITYZWR_AUTHOR_URL' ) || define( 'GRAVITYZWR_AUTHOR_URL', $plugin_data[ 'author_uri' ] );
+defined( 'GRAVITYZWR_GUIDE_URL' ) || define( 'GRAVITYZWR_GUIDE_URL', GRAVITYZWR_AUTHOR_URL . 'guide/plugin/' . GRAVITYZWR_TEXTDOMAIN . '/' );
+defined( 'GRAVITYZWR_DOCS_URL' ) || define( 'GRAVITYZWR_DOCS_URL', GRAVITYZWR_AUTHOR_URL . 'docs/plugin/' . GRAVITYZWR_TEXTDOMAIN . '/' );
+defined( 'GRAVITYZWR_SUPPORT_URL' ) || define( 'GRAVITYZWR_SUPPORT_URL', GRAVITYZWR_AUTHOR_URL . 'support/plugin/' . GRAVITYZWR_TEXTDOMAIN . '/' );
+defined( 'GRAVITYZWR_DISCORD_URL' ) || define( 'GRAVITYZWR_DISCORD_URL', $plugin_data[ 'discord_uri' ] );
 
 
 /**
@@ -94,14 +99,38 @@ add_filter( 'plugin_row_meta', 'gravityzwr_plugin_row_meta' , 10, 2 );
  * @return array
  */
 function gravityzwr_plugin_row_meta( $links, $file ) {
-    // Only apply to this plugin
-    if ( GRAVITYZWR_TEXTDOMAIN.'/'.GRAVITYZWR_TEXTDOMAIN.'.php' == $file ) {
+    $text_domain = GRAVITYZWR_TEXTDOMAIN;
+    if ( $text_domain . '/' . $text_domain . '.php' == $file ) {
 
-        // Add the link
-        $row_meta = [
-            // 'docs'    => '<a href="'.esc_url( 'https://apos37.com/wordpress-addon-for-zoom-gravity-forms/' ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Website Link', 'gravity-zwr' ).'">'.esc_html__( 'Website', 'gravity-zwr' ).'</a>',
-            'discord' => '<a href="'.esc_url( GRAVITYZWR_DISCORD_SUPPORT_URL ).'" target="_blank" aria-label="'.esc_attr__( 'Plugin Support on Discord', 'gravity-zwr' ).'">'.esc_html__( 'Discord Support', 'gravity-zwr' ).'</a>'
+        $guide_url = GRAVITYZWR_GUIDE_URL;
+        $docs_url = GRAVITYZWR_DOCS_URL;
+        $support_url = GRAVITYZWR_SUPPORT_URL;
+        $plugin_name = GRAVITYZWR_NAME;
+
+        $our_links = [
+            'guide' => [
+                // translators: Link label for the plugin's user-facing guide.
+                'label' => __( 'How-To Guide', 'gravity-zwr' ),
+                'url'   => $guide_url
+            ],
+            'docs' => [
+                // translators: Link label for the plugin's developer documentation.
+                'label' => __( 'Developer Docs', 'gravity-zwr' ),
+                'url'   => $docs_url
+            ],
+            'support' => [
+                // translators: Link label for the plugin's support page.
+                'label' => __( 'Support', 'gravity-zwr' ),
+                'url'   => $support_url
+            ],
         ];
+
+        $row_meta = [];
+        foreach ( $our_links as $key => $link ) {
+            // translators: %1$s is the link label, %2$s is the plugin name.
+            $aria_label = sprintf( __( '%1$s for %2$s', 'gravity-zwr' ), $link[ 'label' ], $plugin_name );
+            $row_meta[ $key ] = '<a href="' . esc_url( $link[ 'url' ] ) . '" target="_blank" aria-label="' . esc_attr( $aria_label ) . '">' . esc_html( $link[ 'label' ] ) . '</a>';
+        }
 
         // Require Gravity Forms Notice
         if ( ! is_plugin_active( 'gravityforms/gravityforms.php' ) ) {

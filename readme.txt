@@ -4,7 +4,7 @@ Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 5.0
 Requires PHP: 8.0
 Tested up to: 6.8
-Stable tag: 1.4.1
+Stable tag: 1.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -30,12 +30,12 @@ Originally developed by Michael Bourne as "[Gravity Forms Zoom Webinar Registrat
 This plugin integrates with the Zoom API to facilitate registration for webinars and meetings. By using this plugin, you acknowledge that certain data will be transmitted to Zoom in order to create and manage webinar registrants.
 
 **Circumstances Under Which Data is Sent:**
-- When a user submits a registration form, the plugin sends the registrant's information (e.g., name, email) to Zoom to create a new registrant for the specified webinar or meeting.
+When a user submits a registration form, the plugin sends the registrant's information (e.g., name, email) to Zoom to create a new registrant for the specified webinar or meeting.
 
 **Links:**
-- **Zoom API Documentation**: [Zoom API Documentation](https://developers.zoom.us/docs/api/)
-- **Zoom Privacy Policy**: [Zoom Privacy Policy](https://www.zoom.com/en/trust/privacy/)
-- **Zoom Terms of Service**: [Zoom Terms of Service](https://www.zoom.com/en/trust/terms/)
+ • **Zoom API Documentation**: [Zoom API Documentation](https://developers.zoom.us/docs/api/)
+ • **Zoom Privacy Policy**: [Zoom Privacy Policy](https://www.zoom.com/en/trust/privacy/)
+ • **Zoom Terms of Service**: [Zoom Terms of Service](https://www.zoom.com/en/trust/terms/)
 
 For any concerns regarding data transmission and processing, please refer to the links above to understand how your information is handled by Zoom.
 
@@ -69,20 +69,21 @@ At this time, compatibility with Zoom Events or Zoom Sessions has not been confi
 
 = Can I use one form for multiple Zoom webinars? =
 Yes, you can use a single Gravity Form to handle registrations for multiple Zoom webinars by creating a separate feed for each webinar. Each feed can be triggered conditionally based on a form field value. There are two common ways to manage this:
-- **Dropdown Field**: Add a visible dropdown field to the form listing available webinars. Each feed is configured to run only when a specific option is selected.
-- **Hidden Field**: Use a hidden field (e.g., webinar_id) that is dynamically populated—such as via a URL parameter or post meta—based on the page the form is displayed on. Each feed uses this value to determine which webinar to register for.
+ • **Dropdown Field**: Add a visible dropdown field to the form listing available webinars. Each feed is configured to run only when a specific option is selected.
+ • **Hidden Field**: Use a hidden field (e.g., webinar_id) that is dynamically populated—such as via a URL parameter or post meta—based on the page the form is displayed on. Each feed uses this value to determine which webinar to register for.
+
 This allows you to reuse the same form without needing to create a new one for each webinar.
 
 = The registration did not go through, what happened? =
 There could be several reasons. You can check for an error in the entry details notes, which should give you a good indication of what happened. Some common reasons include:
-- You didn't actually set up the plugin or a webinar/meeting feed
-- The Account ID, Client ID, and/or Client Secret are incorrect
-- Incorrect scopes set
-- A field is required on your Zoom registration form but not mapped on the plugin feed
-- The webinar or meeting with the ID you entered does not exist
-- The feed is set to a webinar when it should be a meeting or vice versa
-- The webinar/meeting host can not register
-- User's email cannot register for the same webinar/meeting more than 3 times in 24 hours
+ • You didn't actually set up the plugin or a webinar/meeting feed
+ • The Account ID, Client ID, and/or Client Secret are incorrect
+ • Incorrect scopes set
+ • A field is required on your Zoom registration form but not mapped on the plugin feed
+ • The webinar or meeting with the ID you entered does not exist
+ • The feed is set to a webinar when it should be a meeting or vice versa
+ • The webinar/meeting host can not register
+ • User's email cannot register for the same webinar/meeting more than 3 times in 24 hours
 
 = How do I retrieve the join link URL after registration? =
 A Join Link field has been added to the Zoom Webinar feed registation fields section. If you want the join link to populate into a hidden field on the entry, then just choose the field you want from your form.
@@ -100,7 +101,7 @@ You can map custom questions to your Zoom registration by using a simple code sn
 } );`
 
 = Where can I request features and get further support? =
-Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
+We recommend using our [website support forum](https://pluginrx.com/support/plugin/gravity-zwr/) as the primary method for requesting features and getting help. You can also reach out via our [Discord support server](https://discord.gg/3HnzNEJVnR) or the [WordPress.org support forum](https://wordpress.org/support/plugin/gravity-zwr/), but please note that WordPress.org doesn’t always notify us of new posts, so it’s not ideal for time-sensitive issues.
 
 == Screenshots ==
 1. Plugin settings
@@ -109,6 +110,9 @@ Join my [Discord support server](https://discord.gg/3HnzNEJVnR)
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.5.0 =
+* Update: New support links
+
 = 1.4.1 =
 * Update: Updated author name and website again per WordPress trademark policy
 
