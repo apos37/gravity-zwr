@@ -607,10 +607,13 @@ class GravityZWR extends GFFeedAddOn {
 			if ( $join_url_field_id ) {
 				GFAPI::update_entry_field( $entry[ 'id' ], $join_url_field_id, $join_url );
 			}
-          
+
             // Log that the registrant was added.
             RGFormsModel::add_note( $entry[ 'id' ], 0, __( 'Zoom Webinar', 'gravity-zwr' ), esc_html( $note ), 'gravity-zwr', 'success' );
 			$this->log_debug( __METHOD__ . '(): Registrant successfull: ' . print_r( $remote_request->get_body(), true ) ); // phpcs:ignore
+
+			// Trigger a post-registration success action.
+			do_action( 'gravityzwr_post_registration_success', $feed, $entry, $form, $response_data );
 		}
 
 		return $entry;
