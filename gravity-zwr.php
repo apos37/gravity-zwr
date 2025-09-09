@@ -3,7 +3,7 @@
  * Plugin Name:         Add-On for Zoom Registration and Gravity Forms
  * Plugin URI:          https://pluginrx.com/plugin/gravity-zwr/
  * Description:         Register attendees in your Zoom Webinar or Zoom Meeting through a Gravity Form
- * Version:             1.5.0
+ * Version:             1.5.1
  * Requires at least:   5.9
  * Tested up to:        6.8
  * Requires PHP:        8.0

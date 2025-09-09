@@ -4,7 +4,7 @@ Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 5.0
 Requires PHP: 8.0
 Tested up to: 6.8
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -110,6 +110,9 @@ We recommend using our [website support forum](https://pluginrx.com/support/plug
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.5.1 =
+* Update: Added an action hook after successful registration (props @codegeekatx)
+
 = 1.5.0 =
 * Update: New support links
 
