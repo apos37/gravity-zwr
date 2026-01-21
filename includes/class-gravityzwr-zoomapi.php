@@ -27,9 +27,15 @@ class GravityZWR_ZOOMAPI extends GravityZWR_WordPressRemote {
 			$options = (new GravityZWR())->get_zoom_settings_keys();
 
 			// Set variables from contants if set, or default to options array if not.
-			$account = defined( 'GRAVITYZWR_ACCOUNT_ID' ) ? GRAVITYZWR_ACCOUNT_ID : $options['zoomaccountid'];
-			$client  = defined( 'GRAVITYZWR_CLIENT_ID' ) ? GRAVITYZWR_CLIENT_ID : $options['zoomclientid'];
-			$secret  = defined( 'GRAVITYZWR_CLIENT_SECRET' ) ? GRAVITYZWR_CLIENT_SECRET : $options['zoomclientsecret'];
+			$account = defined( 'GRAVITYZWR_ACCOUNT_ID' ) ? GRAVITYZWR_ACCOUNT_ID : ( isset( $options['zoomaccountid'] ) ? $options['zoomaccountid'] : '' );
+			$client  = defined( 'GRAVITYZWR_CLIENT_ID' ) ? GRAVITYZWR_CLIENT_ID : ( isset( $options['zoomclientid'] ) ? $options['zoomclientid'] : '' );
+			$secret  = defined( 'GRAVITYZWR_CLIENT_SECRET' ) ? GRAVITYZWR_CLIENT_SECRET : ( isset( $options['zoomclientsecret'] ) ? $options['zoomclientsecret'] : '' );
+
+			if ( empty( $account ) || empty( $client ) || empty( $secret ) ) {
+				$gfaddon = new GravityZWR();
+				$gfaddon->log_error( 'Zoom API Error: Missing OAuth credentials. Go to Forms > Settings > Zoom Webinar and add credentials.' );
+				return;
+			}
 
 			$token = wp_remote_post(
 				'https://zoom.us/oauth/token?grant_type=account_credentials&account_id=' . $account,

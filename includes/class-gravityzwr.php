@@ -1,6 +1,6 @@
 <?php
 /**
- * GravityZWR Feed.
+ * GravityZWR Feed. Mine
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -157,7 +157,7 @@ class GravityZWR extends GFFeedAddOn {
 			[
 				'handle'  => 'gravityzwr_join_url_support',
 				'src'     => GRAVITYZWR_PLUGIN_DIR . 'includes/css/entry-details.css',
-				'version' => time(), // TODO: $this->_version
+				'version' => $this->_version,
 				'enqueue' => [ [ 'query' => 'page=gf_entries' ] ],
 			]
 		]);
@@ -361,6 +361,17 @@ class GravityZWR extends GFFeedAddOn {
 							esc_html__( 'Add the Webinar or Meeting ID. You will find this in your Zoom.us webinar or meeting setup.', 'gravity-zwr' )
 						),
 					),
+					array(
+						'name'     => 'zoomOccurrenceID',
+						'label'    => esc_html__( 'Occurrence ID (Optional)', 'gravity-zwr' ),
+						'type'     => 'text',
+						'required' => false,
+						'tooltip'  => sprintf(
+							'<h6>%s</h6>%s',
+							esc_html__( 'Occurrence ID', 'gravity-zwr' ),
+							esc_html__( 'If this is a recurring meeting (Type 2 or 3), enter the specific Occurrence ID here.', 'gravity-zwr' )
+						),
+					),
 				),
 			),
 			array(
@@ -558,6 +569,12 @@ class GravityZWR extends GFFeedAddOn {
 
 		// Construct the API endpoint URL
 		$api_endpoint = GRAVITYZWR_ZOOMAPIURL . '/' . $meetingtype . '/' . $meeting_id . '/registrants';
+
+		// Handle optional Occurrence ID
+		$occurrence_id = isset( $feed['meta']['zoomOccurrenceID'] ) ? preg_replace( '/[^0-9]/', '', $feed['meta']['zoomOccurrenceID'] ) : '';
+		if ( ! empty( $occurrence_id ) ) {
+			$api_endpoint = add_query_arg( 'occurrence_ids', $occurrence_id, $api_endpoint );
+		}
 
 		$remote_request = new GravityZWR_ZOOMAPI( $api_endpoint, array( 'body' => wp_json_encode( $merge_vars ) ), 'post' );
 		$remote_request->run();
