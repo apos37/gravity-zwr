@@ -111,7 +111,7 @@ We recommend using our [website support forum](https://pluginrx.com/support/plug
 
 == Changelog ==
 = 1.5.2 =
-* Update: Added optional occurence ID (props @sflwa)
+* Update: Added optional occurrence ID (props @sflwa)
 * Fix: Undefined variables when missing OAuth credentials
 
 = 1.5.1 =
