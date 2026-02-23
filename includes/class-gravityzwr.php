@@ -358,7 +358,7 @@ class GravityZWR extends GFFeedAddOn {
 						'tooltip'  => sprintf(
 							'<h6>%s</h6>%s',
 							esc_html__( 'Webinar/Meeting ID', 'gravity-zwr' ),
-							esc_html__( 'Add the Webinar or Meeting ID. You will find this in your Zoom.us webinar or meeting setup.', 'gravity-zwr' )
+							esc_html__( 'Enter the Zoom Webinar or Meeting ID from your Zoom.us event settings. You may also provide this dynamically using a merge tag in the format {:FieldID}, for example {:1}.', 'gravity-zwr' )
 						),
 					),
 					array(
@@ -488,7 +488,20 @@ class GravityZWR extends GFFeedAddOn {
 		$this->log_debug( __METHOD__ . '(): Processing feed.' );
 
 		$meetingtype = in_array( $feed['meta']['meetingtype'], [ 'webinars', 'meetings' ], true ) ? $feed['meta']['meetingtype'] : 'webinars';
-		$meeting_id = preg_replace( '/[^0-9]/', '', $feed['meta']['zoomWebinarID'] );
+
+		// $meeting_id = preg_replace( '/[^0-9]/', '', $feed['meta']['zoomWebinarID'] );
+		$raw_meeting_value = isset( $feed[ 'meta' ][ 'zoomWebinarID' ] ) ? trim( $feed[ 'meta' ][ 'zoomWebinarID' ] ) : '';
+		$meeting_id = '';
+		if ( preg_match( '/^\{[^:}]*:([0-9]+)\}$/', $raw_meeting_value, $matches ) ) {
+			$field_id = $matches[1];
+			$field_value = $this->get_field_value( $form, $entry, $field_id );
+			$meeting_id = preg_replace( '/[^0-9]/', '', $field_value );
+		} else {
+			$meeting_id = preg_replace( '/[^0-9]/', '', $raw_meeting_value );
+		}
+
+		// Allow filtering of the meeting ID before we process it.
+		$meeting_id = apply_filters( 'gravityzwr_meeting_id', $meeting_id, $feed, $entry, $form );
 
 		if ( empty( $meeting_id ) ) {
 			$this->add_feed_error( esc_html__( 'Aborted: Empty Webinar/Meeting ID', 'gravity-zwr' ), $feed, $entry, $form );
@@ -634,7 +647,6 @@ class GravityZWR extends GFFeedAddOn {
 		}
 
 		return $entry;
-
 	}
 
 
