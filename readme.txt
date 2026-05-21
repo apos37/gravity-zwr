@@ -1,10 +1,10 @@
 === Add-On for Zoom Registration and Gravity Forms ===
 Contributors: apos37, michaelbourne
 Tags: gravity forms, zoom, webinar, meeting, registration
-Requires at least: 5.0
+Requires at least: 6.0
 Requires PHP: 8.0
-Tested up to: 6.8
-Stable tag: 1.5.3
+Tested up to: 7.0
+Stable tag: 1.5.3.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -110,6 +110,10 @@ We recommend using our [website support forum](https://pluginrx.com/support/plug
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.5.3.1 =
+* Compatibility: Increased minimum required WordPress version to 6.0
+* Compatibility: Tested with WordPress 7.0
+
 = 1.5.3 =
 * Update: Added support for dynamic populate of webinar ID on feed using a merge tag - example: {:field_id} (props Prometric for suggestion)
 
