@@ -159,7 +159,13 @@ class GravityZWR extends GFFeedAddOn {
 				'src'     => GRAVITYZWR_PLUGIN_DIR . 'includes/css/entry-details.css',
 				'version' => $this->_version,
 				'enqueue' => [ [ 'query' => 'page=gf_entries' ] ],
-			]
+			],
+			[
+				'handle'  => 'gravityzwr_feed_list',
+				'src'     => GRAVITYZWR_PLUGIN_DIR . 'includes/css/feed-list.css',
+				'version' => $this->_version,
+				'enqueue' => [ [ 'query' => 'page=gf_edit_forms&view=settings&subview=' . $this->_slug ] ],
+			],
 		]);
 	} // End styles()
 
@@ -211,13 +217,24 @@ class GravityZWR extends GFFeedAddOn {
 	 * @return array
 	 */
 	public function feed_list_columns() {
-
 		return array(
 			'feedName'      => esc_html__( 'Feed Name', 'gravity-zwr' ),
 			'zoomWebinarID' => esc_html__( 'Meeting ID', 'gravity-zwr' ),
+			'meetingtype'   => esc_html__( 'Type', 'gravity-zwr' ),
 		);
-
 	}
+
+	/**
+	 * Renders the value for the Type column on the feed list page.
+	 *
+	 * @param array $feed The feed being included in the feed list.
+	 *
+	 * @return string
+	 */
+	public function get_column_value_meetingtype( $feed ) {
+		$type = isset( $feed[ 'meta' ][ 'meetingtype' ] ) ? $feed[ 'meta' ][ 'meetingtype' ] : 'webinars';
+		return $type === 'meetings' ? esc_html__( 'Meeting', 'gravity-zwr' ) : esc_html__( 'Webinar', 'gravity-zwr' );
+	} // End get_column_value_meetingtype()
 
 	/**
 	 * Configures the settings which should be rendered on the add-on settings tab.

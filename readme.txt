@@ -3,8 +3,8 @@ Contributors: apos37, michaelbourne
 Tags: gravity forms, zoom, webinar, meeting, registration
 Requires at least: 6.0
 Requires PHP: 8.0
-Tested up to: 7.0
-Stable tag: 1.5.3.1
+Tested up to: 7.1
+Stable tag: 1.5.3.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -22,7 +22,7 @@ Originally developed by Michael Bourne as "[Gravity Forms Zoom Webinar Registrat
 2. The [Gravity Forms](https://www.gravityforms.com/) plugin
 3. A [Zoom](https://zoom.us/) account, Pro plan or higher
 4. Recommended: the [Webinar add-on](https://zoom.us/webinar) for your Zoom account
-5. A [Server-to-Server OAuth Application](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/) created for your own Zoom account
+5. A [Server-to-Server OAuth Application](https://developers.zoom.us/docs/internal-apps/) created for your own Zoom account
 6. WordPress version 5+
 7. PHP version 8.0+
 
@@ -46,7 +46,7 @@ For any concerns regarding data transmission and processing, please refer to the
 3. Optional: save and import the `gravity-forms-zoom-registration-sample-form.json` file as a starter form. All required and optional registration fields are included.
 
 == Usage ==
-1. After installation, go to **Gravity Forms > Settings > Zoom Webinar**. Enter your [Server OAuth App](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/) Account ID, Client ID, and Client Secret. These apps are free to create, take only 5 minutes, and don't need to be published. Fill in all three fields and hit Save.
+1. After installation, go to **Gravity Forms > Settings > Zoom Webinar**. Enter your [Server OAuth App](https://developers.zoom.us/docs/internal-apps/) Account ID, Client ID, and Client Secret. These apps are free to create, take only 5 minutes, and don't need to be published. Fill in all three fields and hit Save.
 2. Follow the directions on the Zoom API docs carefully. You’ll need to edit roles in Zoom settings and create the app. Your user role and app must have the `meeting:write:admin` and `webinar:write:admin` scopes. If you are having issues, you may need to add the following scopes: `meeting:write:registrant:admin` and `meeting:read:list_meetings:admin`.
 3. Ensure the Server-to-Server OAuth App in Zoom is *active* before using this addon.
 4. For the form you'd like to use for registrations, go to **Settings > Zoom Webinar**. Add a new feed, give it a name, choose the meeting type, enter your Meeting ID, and match registration fields accordingly. First name, last name, and email are required fields.
@@ -110,6 +110,10 @@ We recommend using our [website support forum](https://pluginrx.com/support/plug
 4. Entry note on failed registration
 
 == Changelog ==
+= 1.5.3.2 =
+* Tweak: Updated the Server-to-Server OAuth link in Readme
+* Tweak: Added a "Type" column to the Feed list
+
 = 1.5.3.1 =
 * Compatibility: Increased minimum required WordPress version to 6.0
 * Compatibility: Tested with WordPress 7.0

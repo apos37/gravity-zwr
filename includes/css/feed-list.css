@@ -1,0 +1,9 @@
+.gform-settings-panel table.wp-list-table td.column-zoomWebinarID,
+.gform-settings-panel table.wp-list-table th#zoomWebinarID {
+	width: 110px;
+}
+
+.gform-settings-panel table.wp-list-table td.column-meetingtype,
+.gform-settings-panel table.wp-list-table th#meetingtype {
+	width: 90px;
+}
